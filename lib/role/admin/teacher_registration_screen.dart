@@ -30,7 +30,7 @@ class _TeacherRegistrationScreenState extends State<TeacherRegistrationScreen> {
     }
 
     // Asignar el nombre como contraseña
-    final password = name; // Nombre del maestro como contraseña
+    final password = phone; // Nombre del maestro como contraseña
 
     // Registrar al maestro en la base de datos
     await _dbHelper.registerUserWithDetails(email, password, 'teacher', name, phone);

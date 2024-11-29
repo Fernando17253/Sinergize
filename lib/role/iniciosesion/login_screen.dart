@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:spinkeeper/role/admin/admin_screen.dart';
 import 'package:spinkeeper/role/maestro/teacher_screen.dart';
-import 'package:spinkeeper/role/padre/parent_screen.dart';
+import 'package:spinkeeper/role/navigationbar/parent_tab_bar.dart'; // Nueva barra para padres
 import 'package:spinkeeper/server/database_helper.dart';
-import 'parent_registration_screen.dart';
-import 'package:spinkeeper/gradient_background.dart';
 import 'package:spinkeeper/server/session_manager.dart';
+import 'package:spinkeeper/gradient_background.dart';
+import 'parent_registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,59 +27,52 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-void _login() async {
-  final username = _usernameController.text.trim();
-  final password = _passwordController.text.trim();
+  void _login() async {
+    final username = _usernameController.text.trim();
+    final password = _passwordController.text.trim();
 
-  if (username.isEmpty || password.isEmpty) {
-    _showMessage('Por favor, ingresa usuario y contraseña.');
-    return;
-  }
-
-  final user = await _dbHelper.loginUser(username, password);
-  if (user != null) {
-    await _sessionManager.saveLastUser(user['id'], user['userType']); // Guardar usuario actual
-    print('Datos guardados en SessionManager: userId=${user['id']}, userType=${user['userType']}'); // Aquí
-    _navigateToHome(user);
-  } else {
-    _showMessage('Credenciales incorrectas.');
-  }
-}
-
-void _authenticateWithBiometrics() async {
-  try {
-    final isAvailable = await _auth.canCheckBiometrics;
-    print('Biometría disponible: $isAvailable');
-
-    if (!isAvailable) {
-      _showMessage('La autenticación biométrica no está disponible.');
+    if (username.isEmpty || password.isEmpty) {
+      _showMessage('Por favor, ingresa usuario y contraseña.');
       return;
     }
 
-    final authenticated = await _auth.authenticate(
-      localizedReason: 'Usa tu huella digital para iniciar sesión',
-      options: const AuthenticationOptions(biometricOnly: true),
-    );
-
-    print('Huella autenticada: $authenticated'); // Aquí
-
-    if (authenticated) {
-      final lastUser = await _sessionManager.getLastUser();
-      print('Último usuario recuperado: $lastUser'); // Aquí
-
-      if (lastUser != null) {
-        _navigateToHome(lastUser);
-      } else {
-        _showMessage('No hay datos de una sesión previa.');
-      }
+    final user = await _dbHelper.loginUser(username, password);
+    if (user != null) {
+      await _sessionManager.saveLastUser(user['id'], user['userType']);
+      _navigateToHome(user);
     } else {
-      _showMessage('Autenticación fallida.');
+      _showMessage('Credenciales incorrectas.');
     }
-  } catch (e) {
-    print('Error en autenticación biométrica: $e');
-    _showMessage('Error al usar la autenticación biométrica.');
   }
-}
+
+  void _authenticateWithBiometrics() async {
+    try {
+      final isAvailable = await _auth.canCheckBiometrics;
+
+      if (!isAvailable) {
+        _showMessage('La autenticación biométrica no está disponible.');
+        return;
+      }
+
+      final authenticated = await _auth.authenticate(
+        localizedReason: 'Usa tu huella digital para iniciar sesión',
+        options: const AuthenticationOptions(biometricOnly: true),
+      );
+
+      if (authenticated) {
+        final lastUser = await _sessionManager.getLastUser();
+        if (lastUser != null) {
+          _navigateToHome(lastUser);
+        } else {
+          _showMessage('No hay datos de una sesión previa.');
+        }
+      } else {
+        _showMessage('Autenticación fallida.');
+      }
+    } catch (e) {
+      _showMessage('Error al usar la autenticación biométrica: $e');
+    }
+  }
 
   void _navigateToHome(Map<String, dynamic> user) {
     final userType = user['userType'];
@@ -88,7 +81,7 @@ void _authenticateWithBiometrics() async {
     if (userType == 'admin') {
       Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
     } else if (userType == 'parent') {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ParentScreen(parentId: userId)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ParentTabBar(parentId: userId)));
     } else if (userType == 'teacher') {
       Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherScreen(teacherId: userId)));
     } else {

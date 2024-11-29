@@ -73,6 +73,86 @@ class _AdminScreenState extends State<AdminScreen> {
     );
   }
 
+  // Mostrar diálogo con detalles del usuario
+  void _showDetailsDialog(String title, Map<String, dynamic> details, List<String> fields) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: fields.map((field) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Text(
+                  '$field: ${details[field]}',
+                  style: const TextStyle(fontSize: 16),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cerrar', style: TextStyle(color: Color(0xFF203F8E))),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showTeacherDetails(Map<String, dynamic> teacher) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Detalles del Maestro'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Nombre: ${teacher['name']}'),
+          Text('Correo: ${teacher['email']}'),
+          Text('Teléfono: ${teacher['phone']}'),
+          Text('Dirección: ${teacher['address']}'),
+          Text('Área: ${teacher['area']}'),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cerrar'),
+        ),
+      ],
+    ),
+  );
+}
+
+void _showParentDetails(Map<String, dynamic> parent) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Detalles del Padre'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Nombre: ${parent['fullName']}'),
+          Text('Correo: ${parent['username']}'),
+          Text('Teléfono: ${parent['phone']}'),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cerrar'),
+        ),
+      ],
+    ),
+  );
+}
+
   @override
   Widget build(BuildContext context) {
     return GradientBackground(
@@ -81,10 +161,6 @@ class _AdminScreenState extends State<AdminScreen> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text(
-            'Administrador',
-            style: TextStyle(color: Color.fromARGB(255, 15, 14, 14)),
-          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -142,15 +218,8 @@ class _AdminScreenState extends State<AdminScreen> {
                               teacher['name'],
                               style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Correo: ${teacher['email']}'),
-                                Text('Teléfono: ${teacher['phone']}'),
-                                Text('Dirección: ${teacher['address']}'),
-                                Text('Área: ${teacher['area']}'),
-                              ],
-                            ),
+                            subtitle: Text('Área: ${teacher['area']}'),
+                            onTap: () => _showTeacherDetails(teacher),
                             trailing: IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () => _confirmDelete('Maestro', teacher['id']),
@@ -186,13 +255,8 @@ class _AdminScreenState extends State<AdminScreen> {
                               parent['fullName'],
                               style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Correo: ${parent['username']}'),
-                                Text('Teléfono: ${parent['phone']}'),
-                              ],
-                            ),
+                            subtitle: Text('Teléfono: ${parent['phone']}'),
+                            onTap: () => _showParentDetails(parent),
                             trailing: IconButton(
                               icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () => _confirmDelete('Padre', parent['id']),

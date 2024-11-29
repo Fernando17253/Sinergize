@@ -29,7 +29,7 @@ class _ChildRegistrationScreenState extends State<ChildRegistrationScreen> {
     setState(() {
       _birthdateController.text = formattedDate;
     });
-    }
+  }
 
   void _registerChild() async {
     final name = _nameController.text;
@@ -66,49 +66,77 @@ class _ChildRegistrationScreenState extends State<ChildRegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Registrar Hijo'),
-        backgroundColor: const Color(0xFF203F8E),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Nombre completo',
-                prefixIcon: Icon(Icons.person),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              const Color(0xFFFFFFFF), // Blanco
+              const Color(0xFFE0FFFF), // Azul claro
+              const Color(0xFF87CEEB), // Azul más fuerte
+            ],
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Logo centrado en la parte superior
+              Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: Center(
+                  child: Image.asset(
+                    'assets/logo.png', // Asegúrate de tener la imagen en assets
+                    height: 100, // Ajusta el tamaño del logo
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _birthdateController,
-              readOnly: true,
-              decoration: const InputDecoration(
-                labelText: 'Fecha de nacimiento',
-                prefixIcon: Icon(Icons.calendar_today),
+              const SizedBox(height: 30), // Espacio debajo del logo
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Nombre completo',
+                        prefixIcon: Icon(Icons.person),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _birthdateController,
+                      readOnly: true,
+                      decoration: const InputDecoration(
+                        labelText: 'Fecha de nacimiento',
+                        prefixIcon: Icon(Icons.calendar_today),
+                      ),
+                      onTap: _selectBirthdate,
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _addressController,
+                      decoration: const InputDecoration(
+                        labelText: 'Dirección',
+                        prefixIcon: Icon(Icons.location_on),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: _registerChild,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF203F8E),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: const Text('Registrar Hijo', style: TextStyle(color: Colors.white, fontSize: 16)),
+                    ),
+                  ],
+                ),
               ),
-              onTap: _selectBirthdate,
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _addressController,
-              decoration: const InputDecoration(
-                labelText: 'Dirección',
-                prefixIcon: Icon(Icons.location_on),
-              ),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: _registerChild,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF203F8E),
-                padding: const EdgeInsets.symmetric(vertical: 16),
-              ),
-              child: const Text('Registrar Hijo', style: TextStyle(color: Colors.white, fontSize: 16)),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

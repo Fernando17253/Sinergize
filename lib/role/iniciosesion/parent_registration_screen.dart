@@ -1,13 +1,15 @@
+import 'dart:convert'; // Para convertir a JSON
 import 'package:flutter/material.dart';
-import 'package:spinkeeper/server/database_helper.dart';
-import 'package:spinkeeper/role/padre/parent_screen.dart'; // Importamos la vista de padre
+import 'package:http/http.dart' as http;
+import 'package:spinkeeper/role/iniciosesion/login_screen.dart'; // Importamos la vista de padre
 import 'package:spinkeeper/gradient_background.dart'; // Importar fondo degradado
 
 class ParentRegistrationScreen extends StatefulWidget {
   const ParentRegistrationScreen({super.key});
 
   @override
-  _ParentRegistrationScreenState createState() => _ParentRegistrationScreenState();
+  _ParentRegistrationScreenState createState() =>
+      _ParentRegistrationScreenState();
 }
 
 class _ParentRegistrationScreenState extends State<ParentRegistrationScreen> {
@@ -16,8 +18,11 @@ class _ParentRegistrationScreenState extends State<ParentRegistrationScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  final DatabaseHelper _dbHelper = DatabaseHelper();
 
+  // API URL
+  final String _apiUrl = 'https://59wgwpg4-3000.use2.devtunnels.ms/api/v1/register';
+
+  // Función para registrar al padre en la API
   void _registerParent() async {
     final fullName = _fullNameController.text;
     final phone = _phoneController.text;
@@ -26,7 +31,11 @@ class _ParentRegistrationScreenState extends State<ParentRegistrationScreen> {
     final confirmPassword = _confirmPasswordController.text;
 
     // Validaciones
-    if (fullName.isEmpty || phone.isEmpty || username.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+    if (fullName.isEmpty ||
+        phone.isEmpty ||
+        username.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty) {
       _showMessage('Todos los campos son obligatorios.');
       return;
     }
@@ -36,32 +45,41 @@ class _ParentRegistrationScreenState extends State<ParentRegistrationScreen> {
       return;
     }
 
-    // Verificar si el usuario ya existe
-    final existingUser = await _dbHelper.loginUser(username, password);
-    if (existingUser != null) {
-      _showMessage('Este usuario ya está registrado.');
-      return;
+    try {
+      // Crear el cuerpo de la solicitud
+      final Map<String, String> body = {
+        'full_name': fullName,
+        'phone': phone,
+        'username': username,
+        'password': password,
+      };
+
+      // Hacer la solicitud POST a la API
+      final response = await http.post(
+        Uri.parse(_apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(body), // Convertir el cuerpo a JSON
+      );
+
+      // Verificar el estado de la respuesta
+      if (response.statusCode == 200) {
+        _showMessage('Registro exitoso. Por favor, inicia sesión.', isError: false);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          (route) => false,
+        );
+      } else {
+        _showMessage('Error al registrar al padre: ${response.body}');
+      }
+    } catch (e) {
+      _showMessage('Ocurrió un error al intentar conectar con la API.');
     }
-
-    // Redirigir automáticamente a la vista de padre
-final parentId = await _dbHelper.registerUserWithDetails(
-  username,
-  password,
-  'parent',
-  fullName,
-  phone,
-);
-
-// Redirigir automáticamente a la vista de padre
-Navigator.pushAndRemoveUntil(
-  context,
-  MaterialPageRoute(
-    builder: (context) => ParentScreen(parentId: parentId),
-  ),
-  (route) => false,
-);
   }
 
+  // Función para mostrar los mensajes
   void _showMessage(String message, {bool isError = true}) {
     showDialog(
       context: context,
