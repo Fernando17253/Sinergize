@@ -25,7 +25,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
   Future<void> _initializeNotifications() async {
     _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-    final androidSettings = AndroidInitializationSettings('app_icon');
+    const androidSettings = AndroidInitializationSettings('app_icon');
     final initializationSettings = InitializationSettings(android: androidSettings);
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
@@ -44,7 +44,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
       0,
       '¡Es hora de tomar tu medicamento!',
       'Recuerda tomar el medicamento: ${_medicationController.text} de ${_doseController.text} dosis.',
-      scheduledTime.subtract(Duration(minutes: 5)),
+      scheduledTime.subtract(const Duration(minutes: 5)),
       platformDetails,
     );
   }
@@ -82,14 +82,14 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color(0xFFFFFFFF), // Blanco
-              const Color(0xFFE0FFFF), // Azul claro
-              const Color(0xFF87CEEB), // Azul más fuerte
+              Color(0xFFFFFFFF), // Blanco
+              Color(0xFFE0FFFF), // Azul claro
+              Color(0xFF87CEEB), // Azul más fuerte
             ],
           ),
         ),
@@ -115,11 +115,11 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _setReminder,
-                child: const Text('Registrar Recordatorio'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF203F8E),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
+                child: const Text('Registrar Recordatorio'),
               ),
             ],
           ),

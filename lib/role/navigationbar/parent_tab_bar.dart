@@ -3,6 +3,7 @@ import 'package:spinkeeper/role/padre/parent_screen.dart';
 import 'package:spinkeeper/role/padre/medical_appointment_screen.dart';
 import 'package:spinkeeper/role/padre/group_chat_screen.dart';
 import 'package:spinkeeper/role/padre/medical_history_screen.dart';
+import 'package:spinkeeper/role/padre/children_list_screen.dart'; // Importar la nueva pantalla
 
 class ParentTabBar extends StatefulWidget {
   final int parentId;
@@ -27,6 +28,7 @@ class _ParentTabBarState extends State<ParentTabBar> {
       const MedicalAppointmentsScreen(),
       const GroupChatScreen(),
       const MedicalHistoryScreen(),
+      const ChildrenListScreen(), // Agregamos la nueva pantalla aquí
     ]);
   }
 
@@ -60,6 +62,10 @@ class _ParentTabBarState extends State<ParentTabBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
             label: 'Historial',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.child_care),
+            label: 'Hijos', // Nuevo ítem para la lista de hijos
           ),
         ],
       ),

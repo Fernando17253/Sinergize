@@ -209,4 +209,8 @@ class DatabaseHelper {
       whereArgs: [id],
     );
   }
+
+  getUserByUsername(String username) {}
+
+  insertUser(Map<String, String> user) {}
 }

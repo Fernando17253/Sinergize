@@ -69,14 +69,14 @@ class _ChildRegistrationScreenState extends State<ChildRegistrationScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color(0xFFFFFFFF), // Blanco
-              const Color(0xFFE0FFFF), // Azul claro
-              const Color(0xFF87CEEB), // Azul más fuerte
+              Color(0xFFFFFFFF), // Blanco
+              Color(0xFFE0FFFF), // Azul claro
+              Color(0xFF87CEEB), // Azul más fuerte
             ],
           ),
         ),

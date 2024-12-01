@@ -65,7 +65,7 @@ class _MedicalAppointmentsScreenState extends State<MedicalAppointmentsScreen> {
       0,
       '¡Es hora de tu cita médica!',
       'Recuerda tu cita médica: ${_appointments.last['name']}.',
-      scheduledTime.subtract(Duration(minutes: 5)),
+      scheduledTime.subtract(const Duration(minutes: 5)),
       platformDetails,
     );
   }
@@ -90,14 +90,14 @@ class _MedicalAppointmentsScreenState extends State<MedicalAppointmentsScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color(0xFFFFFFFF), // Blanco
-              const Color(0xFFE0FFFF), // Azul claro
-              const Color(0xFF87CEEB), // Azul más fuerte
+              Color(0xFFFFFFFF), // Blanco
+              Color(0xFFE0FFFF), // Azul claro
+              Color(0xFF87CEEB), // Azul más fuerte
             ],
           ),
         ),
@@ -142,11 +142,11 @@ class _MedicalAppointmentsScreenState extends State<MedicalAppointmentsScreen> {
                     ),
                   );
                 },
-                child: const Text('Registrar Nueva Cita'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF203F8E),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
+                child: const Text('Registrar Nueva Cita'),
               ),
             ],
           ),
@@ -175,8 +175,8 @@ class RegisterAppointmentScreen extends StatelessWidget {
         title: const Text('Registrar Cita Médica'),
         backgroundColor: const Color(0xFF203F8E),
       ),
-      body: Center(
-        child: const Text('Aquí puedes registrar nuevas citas médicas.'),
+      body: const Center(
+        child: Text('Aquí puedes registrar nuevas citas médicas.'),
       ),
     );
   }

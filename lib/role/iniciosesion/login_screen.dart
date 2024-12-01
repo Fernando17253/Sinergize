@@ -6,7 +6,7 @@ import 'package:spinkeeper/role/navigationbar/parent_tab_bar.dart'; // Nueva bar
 import 'package:spinkeeper/server/database_helper.dart';
 import 'package:spinkeeper/server/session_manager.dart';
 import 'package:spinkeeper/gradient_background.dart';
-import 'parent_registration_screen.dart';
+import 'package:spinkeeper/role/iniciosesion/parent_registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const ParentRegistrationScreen()),
+                        MaterialPageRoute(builder: (context) => const RegisterScreen()),
                       );
                     },
                     child: const Text(

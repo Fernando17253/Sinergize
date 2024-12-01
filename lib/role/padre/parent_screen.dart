@@ -38,7 +38,7 @@ class _ParentScreenState extends State<ParentScreen> {
 
   // Obtener las predicciones desde la API
   Future<void> _fetchPredictions() async {
-    final url = 'http://18.118.24.98:8000/predicciones/1';
+    const url = 'http://18.118.24.98:8000/predicciones/1';
     try {
       final response = await http.get(Uri.parse(url));
 
@@ -88,14 +88,14 @@ class _ParentScreenState extends State<ParentScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color(0xFFFFFFFF), // Blanco
-              const Color(0xFFE0FFFF), // Azul claro
-              const Color(0xFF87CEEB), // Azul más fuerte
+              Color(0xFFFFFFFF), // Blanco
+              Color(0xFFE0FFFF), // Azul claro
+              Color(0xFF87CEEB), // Azul más fuerte
             ],
           ),
         ),
@@ -202,10 +202,9 @@ class _ParentScreenState extends State<ParentScreen> {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          const SizedBox(height: 8),
                                           Text(
                                             'Tiempo Estimado: $estimatedTime min',
-                                            style: const TextStyle(fontSize: 14, color: Colors.grey),
+                                            style: const TextStyle(fontSize: 13, color: Colors.grey),
                                           ),
                                         ],
                                       ),
