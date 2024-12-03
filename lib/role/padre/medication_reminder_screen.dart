@@ -26,7 +26,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
     _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     const androidSettings = AndroidInitializationSettings('app_icon');
-    final initializationSettings = InitializationSettings(android: androidSettings);
+    final initializationSettings = const InitializationSettings(android: androidSettings);
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }

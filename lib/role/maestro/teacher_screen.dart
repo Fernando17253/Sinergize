@@ -17,7 +17,7 @@ class TeacherScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Datos estáticos por ahora
-    final String subjectName = "Matemáticas";
+    const String subjectName = "Matemáticas";
     final List<Map<String, dynamic>> students = [
       {'id': 1, 'name': 'Alumno 1'},
       {'id': 2, 'name': 'Alumno 2'},
@@ -41,9 +41,9 @@ class TeacherScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Alumnos en la materia:',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Expanded(
@@ -59,9 +59,9 @@ class TeacherScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Actividades asignadas:',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Expanded(
