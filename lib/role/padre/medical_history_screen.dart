@@ -28,7 +28,7 @@ class MedicalHistoryScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 50), // Ajusta el espacio superior
                 child: Center(
                   child: Image.asset(
-                    'assets/logo.png', // Cambia esta ruta si es necesario
+                    'assets/logo1_copy.png', // Cambia esta ruta si es necesario
                     height: 100, // Ajusta el tamaño del logo
                   ),
                 ),

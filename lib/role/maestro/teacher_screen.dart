@@ -32,7 +32,7 @@ class TeacherScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: Text('Materia: $subjectName'),
+          title: const Text('Materia: $subjectName'),
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),

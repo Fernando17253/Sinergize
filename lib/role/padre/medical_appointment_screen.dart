@@ -143,8 +143,8 @@ class _MedicalAppointmentsScreenState extends State<MedicalAppointmentsScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF203F8E),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: const Color.fromARGB(255, 161, 187, 255),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                 ),
                 child: const Text('Registrar Nueva Cita'),
               ),
