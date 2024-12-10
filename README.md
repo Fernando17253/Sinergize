@@ -1,4 +1,4 @@
-# spinkeeper
+# SINERGIZE
 
 A new Flutter project.
 

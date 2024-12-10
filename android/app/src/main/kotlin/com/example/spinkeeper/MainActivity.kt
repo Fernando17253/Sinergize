@@ -1,4 +1,4 @@
-package com.example.spinkeeper
+package com.example.SINERGIZE
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 
